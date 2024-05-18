@@ -1,14 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:tera_app/models/user.dart';
 import 'package:tera_app/repository/google_sign_in_repository.dart';
+import 'package:tera_app/screens/home_screen/home_screen.dart';
 import 'package:tera_app/utils/assets_manager.dart';
 
 class GoogleSignInScreen extends ConsumerWidget {
   const GoogleSignInScreen({super.key});
 
-  void signInWithGoogle(WidgetRef ref) {
-    ref.read(googleSignInRepositoryProvider).signInWithGoogle();
+  void signInWithGoogle(WidgetRef ref, BuildContext context) async {
+    User? user =
+        await ref.read(googleSignInRepositoryProvider).signInWithGoogle();
+    if (user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("An error Occured")),
+      );
+    } else {
+      ref.read(userProvider.notifier).update((state) => user);
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const HomeScreen(),
+        ),
+      );
+    }
   }
 
   @override
@@ -31,7 +46,7 @@ class GoogleSignInScreen extends ConsumerWidget {
           ),
           TextButton.icon(
             onPressed: () {
-              signInWithGoogle(ref);
+              signInWithGoogle(ref, context);
             },
             icon: SvgPicture.asset(
               AssetsManager.iconify(
