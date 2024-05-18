@@ -1,4 +1,4 @@
-package com.example.tera_app
+package com.cloud.tera_app
 
 import io.flutter.embedding.android.FlutterActivity
 

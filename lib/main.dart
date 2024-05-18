@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tera_app/screens/auth/google_sign_in_screen.dart';
 
 void main() {
@@ -10,9 +11,11 @@ class TeraApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: GoogleSignInScreen(),
-      debugShowCheckedModeBanner: false,
+    return const ProviderScope(
+      child: MaterialApp(
+        home: GoogleSignInScreen(),
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }

@@ -54,13 +54,13 @@ ThemeData lightTheme = ThemeData(
         TeraColors.primaryColor,
       ),
       foregroundColor: MaterialStateProperty.all<Color>(
-        const Color(0xffffffff),
+        const Color(0xffEEEEEE),
       ),
       fixedSize: MaterialStateProperty.all<Size>(
         const Size(200, 50),
       ),
       textStyle: MaterialStateProperty.all<TextStyle>(
-        const TextStyle(fontSize: 20, fontFamily: "ElMessiri"),
+        const TextStyle(fontSize: 25, fontFamily: "ElMessiri"),
       ),
     ),
   ),
