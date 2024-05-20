@@ -9,8 +9,9 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(ref.watch(userProvider)!.email),
+          Center(child: Text(ref.watch(userProvider)!.email)),
         ],
       ),
     );

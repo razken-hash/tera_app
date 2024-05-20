@@ -6,8 +6,18 @@ void main() {
   runApp(const TeraApp());
 }
 
-class TeraApp extends StatelessWidget {
+class TeraApp extends StatefulWidget {
   const TeraApp({super.key});
+
+  @override
+  State<TeraApp> createState() => _TeraAppState();
+}
+
+class _TeraAppState extends State<TeraApp> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
