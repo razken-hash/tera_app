@@ -6,16 +6,18 @@ publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.2.3 <4.0.0"
+  sdk: ">=3.4.1 <4.0.0"
 
 dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  flutter_quill: ^9.3.19
   flutter_riverpod: ^2.5.1
   flutter_svg: ^2.0.10+1
   google_sign_in: ^6.2.1
   http: null
+  routemaster: ^1.0.1
   shared_preferences: ^2.2.3
 
 dev_dependencies:

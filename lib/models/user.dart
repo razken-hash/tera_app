@@ -18,14 +18,14 @@ class User {
   User copyWith({
     String? email,
     String? name,
-    String? pictire,
+    String? picture,
     String? id,
     String? token,
   }) {
     return User(
       email: email ?? this.email,
       name: name ?? this.name,
-      picture: pictire ?? picture,
+      picture: picture ?? this.picture,
       id: id ?? this.id,
       token: token ?? this.token,
     );
@@ -36,7 +36,7 @@ class User {
       'email': email,
       'name': name,
       'picture': picture,
-      'id': id,
+      '_id': id,
       'token': token,
     };
   }
@@ -44,10 +44,10 @@ class User {
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
       email: map['email'] as String,
-      name: map['name'] as String,
-      picture: map['picture'] as String,
-      id: map['id'] as String,
-      token: map['token'] as String,
+      name: map['name'] ?? "",
+      picture: map['picture'] ?? "",
+      id: map['_id'] ?? "",
+      token: map['token'] ?? "",
     );
   }
 

@@ -39,8 +39,8 @@ class GoogleSignInRepository {
       if (googleSignInAccount != null) {
         User user = User(
           email: googleSignInAccount.email,
-          name: googleSignInAccount.displayName!,
-          picture: googleSignInAccount.photoUrl!,
+          name: googleSignInAccount.displayName ?? "",
+          picture: googleSignInAccount.photoUrl ?? "",
           id: "",
           token: "",
         );
@@ -53,14 +53,16 @@ class GoogleSignInRepository {
           body: user.toJson(),
         );
 
+        log(response.body);
+
         switch (response.statusCode) {
           case 200:
             final responseBody = jsonDecode(response.body);
             user = user.copyWith(
               id: responseBody["user"]["_id"],
-              // token: responseBody["token"],
+              token: responseBody["token"],
             );
-            // _localStorageRepository.setAuthToken(user.token);
+            _localStorageRepository.setAuthToken(user.token);
             return user;
           default:
             break;
@@ -70,39 +72,44 @@ class GoogleSignInRepository {
     return null;
   }
 
-  void signOutWithGoogle() async {
+  Future<bool> signOutWithGoogle() async {
     try {
-      await _googleSignIn.signOut();
+      final googleSignInAccount = await _googleSignIn.signOut();
+      if (googleSignInAccount == null) {
+        await LocalStorageRepository.clearLocalStorage();
+        return true;
+      }
     } catch (e) {}
-    return null;
+    return false;
   }
 
   Future<User?> getUserData() async {
     try {
       final String? token = await _localStorageRepository.getAuthToken();
+
       if (token == null) return null;
 
       final response = await _client.get(
-        Uri.parse("$BASE_URL/api/v1/auth/user"),
+        Uri.parse("$BASE_URL/user"),
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
-          "x-auth-token": token,
+          "token": token,
         },
       );
+
+      log(response.body);
 
       switch (response.statusCode) {
         case 200:
           final responseBody = jsonDecode(response.body);
-          User user = User.fromJson(responseBody["body"]).copyWith(
+          User user = User.fromJson(jsonEncode(responseBody["user"])).copyWith(
             token: responseBody["token"],
           );
           return user;
         default:
           break;
       }
-    } catch (e) {
-      log(e.toString());
-    }
+    } catch (e) {}
     return null;
   }
 }
