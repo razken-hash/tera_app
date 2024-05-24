@@ -100,66 +100,89 @@ class HomeScreen extends ConsumerWidget {
               height: 20,
             ),
             Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                mainAxisSpacing: 15,
-                crossAxisSpacing: 15,
-                childAspectRatio: 1.5,
-                children: List.generate(
-                  17,
-                  (index) => SizedBox(
-                    height: 100,
-                    child: Container(
-                      // height: 170,
-                      padding: const EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              SvgPicture.asset(
-                                AssetsManager.iconify(index % 3 == 0
-                                    ? "docs"
-                                    : index % 3 == 1
-                                        ? "sheets"
-                                        : "slides"),
-                                height: 50,
-                                width: 50,
-                                fit: BoxFit.scaleDown,
-                              ),
-                              const SizedBox(width: 5),
-                              const Expanded(
-                                  child: Text("Report2023/2024.docx")),
-                            ],
+              child: FutureBuilder<List<Document>>(
+                future: ref
+                    .watch(documentRepositoryProvider)
+                    .getDocuments(ref.watch(userProvider).token),
+                builder: (context, snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.done:
+                      List<Document> docs = snapshot.data!;
+                      return GridView.count(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 15,
+                        crossAxisSpacing: 15,
+                        childAspectRatio: 1.5,
+                        children: List.generate(
+                          docs.length,
+                          (index) => DocumentCard(
+                            document: docs[index],
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text("10.Nov.2024"),
-                              InkWell(
-                                onTap: () {
-                                  final navigator = Routemaster.of(context);
-                                  navigator.push("/docs");
-                                },
-                                child: const Icon(
-                                  Icons.arrow_forward_ios_rounded,
-                                  color: Colors.blueAccent,
-                                  size: 25,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+                        ),
+                      );
+
+                    default:
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class DocumentCard extends StatelessWidget {
+  final Document document;
+  const DocumentCard({super.key, required this.document});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 100,
+      child: Container(
+        padding: const EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade200,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                SvgPicture.asset(
+                  AssetsManager.iconify("docs"),
+                  height: 50,
+                  width: 50,
+                  fit: BoxFit.scaleDown,
+                ),
+                const SizedBox(width: 5),
+                Expanded(child: Text(document.title)),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                    "${document.createdAt.day.toString().padLeft(2, "0")}-${document.createdAt.month.toString().padLeft(2, "0")}-${document.createdAt.year}"),
+                InkWell(
+                  onTap: () {
+                    final navigator = Routemaster.of(context);
+                    navigator.push("/docs/${document.id}");
+                  },
+                  child: const Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    color: Colors.blueAccent,
+                    size: 25,
                   ),
                 ),
-              ),
+              ],
             ),
           ],
         ),
