@@ -8,7 +8,7 @@ class SocketClient {
 
   SocketClient._internal() {
     socket = sockets.io(
-      Uri.parse(BASE_URL),
+      BASE_WS,
       <String, dynamic>{
         "transports": ["websocket"],
         "autoConnect": false,
