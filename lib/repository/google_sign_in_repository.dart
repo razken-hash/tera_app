@@ -35,6 +35,7 @@ class GoogleSignInRepository {
 
   Future<User?> signInWithGoogle() async {
     try {
+      log(BASE_URL);
       final googleSignInAccount = await _googleSignIn.signIn();
       if (googleSignInAccount != null) {
         User user = User(

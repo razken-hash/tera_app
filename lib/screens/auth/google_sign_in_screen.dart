@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:tera_app/models/user.dart';
 import 'package:tera_app/repository/google_sign_in_repository.dart';
+import 'package:tera_app/screens/link_screen.dart/link_screen.dart';
 import 'package:tera_app/utils/assets_manager.dart';
 
 class GoogleSignInScreen extends ConsumerWidget {
@@ -28,6 +29,14 @@ class GoogleSignInScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Routemaster.of(context).push("/settings");
+        },
+        child: const Icon(
+          Icons.settings,
+        ),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

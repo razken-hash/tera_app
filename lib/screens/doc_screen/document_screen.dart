@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:flutter_quill/quill_delta.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,6 +10,7 @@ import 'package:tera_app/repository/google_sign_in_repository.dart';
 import 'package:tera_app/repository/socket_repository.dart';
 import 'package:tera_app/screens/themes/tera_colors.dart';
 import 'package:tera_app/utils/assets_manager.dart';
+import 'package:clipboard/clipboard.dart';
 
 class DocumentScreen extends ConsumerStatefulWidget {
   final String documentId;
@@ -121,32 +121,38 @@ class _DocumentScreenState extends ConsumerState<DocumentScreen> {
                           ),
                         ),
                         const Spacer(),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 4.0,
-                            horizontal: 10,
-                          ),
-                          margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: TeraColors.primaryColor,
-                          ),
-                          child: const Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Icon(
-                                Icons.lock,
-                                color: TeraColors.whiteColor,
-                                size: 20,
-                              ),
-                              Text(
-                                "Share",
-                                style: TextStyle(
-                                  fontSize: 12,
+                        InkWell(
+                          onTap: () {
+                            FlutterClipboard.copy(document!.id)
+                                .then((value) => print('copied'));
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 4.0,
+                              horizontal: 10,
+                            ),
+                            margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: TeraColors.primaryColor,
+                            ),
+                            child: const Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Icon(
+                                  Icons.lock,
                                   color: TeraColors.whiteColor,
+                                  size: 20,
                                 ),
-                              ),
-                            ],
+                                Text(
+                                  "Share",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: TeraColors.whiteColor,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],

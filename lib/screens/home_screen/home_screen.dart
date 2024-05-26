@@ -50,6 +50,14 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Routemaster.of(context).push("/share");
+        },
+        child: const Icon(
+          Icons.edit_document,
+        ),
+      ),
       appBar: AppBar(
           title: const Text(
             "TeraApp",
