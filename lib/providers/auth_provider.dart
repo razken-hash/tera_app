@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart';
 import 'package:tera_app/models/user.dart';
 import 'package:tera_app/services/google_sign_in_service.dart';
 import 'package:tera_app/services/local_storage_service.dart';
@@ -11,7 +10,8 @@ class AuthProvider extends ChangeNotifier {
 
   Future<User?> signInWithGoogle() async {
     final response = await GoogleSignInService.signInWithGoogle();
-    return User.fromJson(response);
+    return User.fromMap(jsonDecode(response)["user"])
+        .copyWith(token: jsonDecode(response)["token"]);
   }
 
   Future<bool> signOutWithGoogle() async {
