@@ -1,32 +1,15 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:ui';
-
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:tera_app/utils/constants.dart';
 import 'package:http/http.dart';
 
-import '../models/document.dart';
+class DocumentsService {
+  static final Client client = Client();
 
-Provider documentRepositoryProvider = Provider(
-  (ref) => DocumentRepository(
-    client: Client(),
-  ),
-);
-
-class DocumentRepository {
-  late Client _client;
-
-  DocumentRepository({
-    required Client client,
-  }) {
-    _client = client;
-  }
-
-  Future<Document?> createDocument(String token) async {
+  static Future<String> createDocument(String token) async {
     try {
-      final response = await _client.post(
+      final response = await client.post(
         Uri.parse("$BASE_URL/docs/create"),
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
@@ -41,19 +24,19 @@ class DocumentRepository {
 
       switch (response.statusCode) {
         case 200:
-          Document document = Document.fromJson(response.body);
-          return document;
+          return response.body;
         default:
           break;
       }
-    } catch (e) {}
-    return null;
+    } catch (e) {
+      log(e.toString());
+    }
+    return "";
   }
 
-  Future<List<Document>> getDocuments(String token) async {
-    List<Document> documents = [];
+  static Future<List<String>> getAllDocuments({required String token}) async {
     try {
-      final response = await _client.get(
+      final response = await client.get(
         Uri.parse("$BASE_URL/docs/me"),
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
@@ -65,21 +48,26 @@ class DocumentRepository {
 
       switch (response.statusCode) {
         case 200:
-          final responseBody = jsonDecode(response.body);
-          for (var doc in responseBody) {
-            Document document = Document.fromJson(jsonEncode(doc));
-            documents.add(document);
+          final result = jsonDecode(response.body);
+          int i = 0;
+          while (i < result.length) {
+            result[i] = jsonDecode(result[i]);
+            i++;
           }
+          return result;
         default:
           break;
       }
-    } catch (e) {}
-    return documents;
+    } catch (e) {
+      log(e.toString());
+    }
+    return [];
   }
 
-  Future<Document?> getDocumentById(String token, String id) async {
+  static Future<String> getDocumentById(
+      {required String token, required String id}) async {
     try {
-      final response = await _client.get(
+      final response = await client.get(
         Uri.parse("$BASE_URL/docs/$id"),
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
@@ -91,21 +79,22 @@ class DocumentRepository {
 
       switch (response.statusCode) {
         case 200:
-          return Document.fromJson(response.body);
+          return response.body;
         default:
           break;
       }
-    } catch (e) {}
-    return null;
+    } catch (e) {
+      log(e.toString());
+    }
+    return "";
   }
 
-  Future<List<Document>> updateDocumentTitle(
+  static Future<String> updateDocumentTitle(
       {required String token,
       required String id,
       required String title}) async {
-    List<Document> documents = [];
     try {
-      final response = await _client.post(
+      final response = await client.post(
         Uri.parse("$BASE_URL/docs/title"),
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
@@ -123,15 +112,13 @@ class DocumentRepository {
 
       switch (response.statusCode) {
         case 200:
-          final responseBody = jsonDecode(response.body);
-          for (var doc in responseBody) {
-            Document document = Document.fromJson(jsonEncode(doc));
-            documents.add(document);
-          }
+          return response.body;
         default:
           break;
       }
-    } catch (e) {}
-    return documents;
+    } catch (e) {
+      log(e.toString());
+    }
+    return "";
   }
 }

@@ -1,7 +1,7 @@
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:tera_app/clients/socket_client.dart';
 
-class SocketRepository {
+class SocketService {
   final Socket _socketClient = SocketClient.getInstance.socket!;
 
   Socket get socketClient => _socketClient;

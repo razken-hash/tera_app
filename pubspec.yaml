@@ -14,10 +14,11 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_quill: ^9.3.19
-  flutter_riverpod: ^2.5.1
+  # flutter_riverpod: ^2.5.1
   flutter_svg: ^2.0.10+1
   google_sign_in: ^6.2.1
   http: null
+  provider: ^6.1.2
   routemaster: ^1.0.1
   shared_preferences: ^2.2.3
   socket_io_client: ^1.0.2

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:tera_app/utils/constants.dart';
 
-class LinkScreen extends StatefulWidget {
-  const LinkScreen({super.key});
+class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({super.key});
 
   @override
-  State<LinkScreen> createState() => _LinkScreenState();
+  State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _LinkScreenState extends State<LinkScreen> {
+class _SettingsScreenState extends State<SettingsScreen> {
   final _linkController = TextEditingController(text: BASE);
 
   @override
