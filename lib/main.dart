@@ -4,7 +4,6 @@ import 'package:routemaster/routemaster.dart';
 import 'package:tera_app/models/user.dart';
 import 'package:tera_app/providers/auth_provider.dart';
 import 'package:tera_app/screens/providers/providers.dart';
-
 import 'package:tera_app/screens/routers/routers.dart';
 import 'package:tera_app/screens/themes/themes.dart';
 
