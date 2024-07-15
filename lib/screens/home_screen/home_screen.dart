@@ -7,7 +7,6 @@ import 'package:routemaster/routemaster.dart';
 import 'package:tera_app/models/document.dart';
 import 'package:tera_app/repository/document_repository.dart';
 import 'package:tera_app/repository/google_sign_in_repository.dart';
-import 'package:tera_app/screens/auth/google_sign_in_screen.dart';
 import 'package:tera_app/utils/assets_manager.dart';
 
 class HomeScreen extends ConsumerWidget {

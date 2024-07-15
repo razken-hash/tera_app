@@ -1,6 +1,7 @@
+// ignore_for_file: empty_catches
+
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:ui';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

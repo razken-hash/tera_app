@@ -10,7 +10,7 @@ final RouteMap loggedOutRoutes = RouteMap(routes: {
   "/": (route) => const MaterialPage(
         child: GoogleSignInScreen(),
       ),
-  "/settings": (route) => MaterialPage(
+  "/settings": (route) => const MaterialPage(
         child: LinkScreen(),
       ),
 });

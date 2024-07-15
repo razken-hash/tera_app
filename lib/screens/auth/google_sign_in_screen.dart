@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:tera_app/models/user.dart';
 import 'package:tera_app/repository/google_sign_in_repository.dart';
-import 'package:tera_app/screens/link_screen.dart/link_screen.dart';
 import 'package:tera_app/utils/assets_manager.dart';
 
 class GoogleSignInScreen extends ConsumerWidget {
