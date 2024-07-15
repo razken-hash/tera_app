@@ -42,7 +42,7 @@ class AuthScreen extends StatelessWidget {
                 if (user != null) {
                   Routemaster.of(context).replace("/home");
                 }
-                //TODO: Sign in with google
+                // TODO: Sign in with google
               },
               icon: SvgPicture.asset(
                 AssetsManager.iconify(

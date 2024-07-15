@@ -50,16 +50,16 @@ ThemeData lightTheme = ThemeData(
   ),
   textButtonTheme: TextButtonThemeData(
     style: ButtonStyle(
-      backgroundColor: MaterialStateProperty.all<Color>(
+      backgroundColor: WidgetStateProperty.all<Color>(
         TeraColors.primaryColor,
       ),
-      foregroundColor: MaterialStateProperty.all<Color>(
+      foregroundColor: WidgetStateProperty.all<Color>(
         const Color(0xffEEEEEE),
       ),
-      fixedSize: MaterialStateProperty.all<Size>(
+      fixedSize: WidgetStateProperty.all<Size>(
         const Size(200, 50),
       ),
-      textStyle: MaterialStateProperty.all<TextStyle>(
+      textStyle: WidgetStateProperty.all<TextStyle>(
         const TextStyle(fontSize: 25, fontFamily: "ElMessiri"),
       ),
     ),

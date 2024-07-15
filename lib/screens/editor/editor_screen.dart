@@ -118,7 +118,7 @@ class _EditorScreenState extends State<EditorScreen> {
                                 InkWell(
                                   onTap: () {
                                     FlutterClipboard.copy(document!.id)
-                                        .then((value) => print('copied'));
+                                        .then((value) => {});
                                   },
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(
